@@ -2,14 +2,13 @@ version: "3.5"
 
 services:
 
-
   php:
     build:
       context: php
     ports:
-    - 127.0.0.1:8000:80
+    - 8000:80
     volumes:
-    - ./app:/var/www/html
+    - ./:/var/www/html
 
   mariadb:
     image: mariadb:10.4
@@ -25,6 +24,11 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
-    - 127.0.0.1:8080:80
+    - 8080:80
     environment:
       PMA_HOST: mariadb
+
+  composer:
+    image: composer:latestcomposer 
+    volumes: 
+    - ./:/usr/bin/composer

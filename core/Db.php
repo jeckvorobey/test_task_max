@@ -1,6 +1,6 @@
 <?php
 
-namespace bot;
+namespace core;
 
 use PDO;
 
@@ -32,7 +32,7 @@ class Db
     /*
      * Выполняем соединение с базой данных
      */
-    public function Connect($user, $password, $base, $host = 'localhost', $port = 3306)
+    public function Connect($user, $password, $base, $host = 'localhost', $port = 8080)
     {
         // Формируем строку соединения с сервером
         $connectString = 'mysql:host=' . $host . ';port= ' . $port . ';dbname=' . $base . ';charset=UTF8;';

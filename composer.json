@@ -1,0 +1,22 @@
+{
+    "name": "serg/test_task_max",
+    "type": "n",
+    "authors": [
+        {
+            "name": "Sergey",
+            "email": "jeckvorobey69@gmail.com"
+        }    
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app",
+            "core\\": "core"
+        },
+        "files": [
+            "./config/dbConfig.php"
+        ]
+    }
+}

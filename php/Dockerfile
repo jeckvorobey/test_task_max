@@ -10,8 +10,8 @@ RUN apt-get install -fyqq \
     g++ gcc gnupg libgcc1 linux-headers-amd64 make python
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer \
- && chmod 755 /bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
+ && chmod 755 /usr/bin/composer
 
 
 # Install additional PHP libraries
@@ -27,4 +27,4 @@ RUN apt-get install -fyqq zip libzip-dev \
  && docker-php-ext-install zip \
  && apt-get remove -fyqq
 
-WORKDIR /app
+WORKDIR /test_task_max

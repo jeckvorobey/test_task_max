@@ -1,6 +1,6 @@
 <?php
 
-namespace bot;
+namespace core;
 
 class Error
 {
