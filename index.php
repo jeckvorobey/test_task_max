@@ -7,14 +7,18 @@
 		<link rel="stylesheet" href="style/style.css">
 </head>
 <body>
-    <main class="main">
-        <form action="/app/server.php" method="POST" enctype="multipart/form-data" class="form">
-            <label for="img" class="label">Загрузка фото</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="15728640">
-            <input type="file" name="photo" id="img">
-            <input type="submit" value="Отпрвить фото" class="btn">
-        </form>
-    </main>
+  <main class="main">
+    <form action="/app/server.php" method="POST" enctype="multipart/form-data" class="form">
+      <label for="img" class="label">Загрузка фото</label>
+      <input type="hidden" name="MAX_FILE_SIZE" value="15728640">
+      <input type="file" name="photo" id="img">
+      <input type="submit" value="Отпрвить фото" class="btn">
+    </form>
+      
+    <form action="/app/server.php" method="get" class="form">
+      <input type="submit" value="Обработанные задания" class="btn">
+    </form>
+  </main>
 </body>
 </html>
 

@@ -17,5 +17,10 @@ if(isset($_POST) && !empty($_POST)){
     echo $app->getPhotoPath();
    } else {
     echo 'это не файл JPG';
+    exit;
    }
+}
+
+if(isset($_GET)){
+ echo 'This Get req';
 }
