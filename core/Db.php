@@ -32,7 +32,7 @@ class Db
     /*
      * Выполняем соединение с базой данных
      */
-    public function Connect($user, $password, $base, $host = 'localhost', $port = 8080)
+    public function Connect($user, $password, $base, $host = '127.0.0.1', $port = 3306)
     {
         // Формируем строку соединения с сервером
         $connectString = 'mysql:host=' . $host . ';port= ' . $port . ';dbname=' . $base . ';charset=UTF8;';
