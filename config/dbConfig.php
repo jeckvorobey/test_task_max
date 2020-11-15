@@ -2,9 +2,9 @@
 
 return [
     'db_user' => 'root',
-    //'db_host' => 'localhost',
+    'db_host' => 'mariadb',
     'db_charset' => 'utf8',
     'db_base' => 'task_db',
-    'db_password' => '123456',
-  //  'db_port' => 3306
+    'db_password' => '12345',
+    'db_port' => 3306
 ];

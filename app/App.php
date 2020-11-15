@@ -37,15 +37,12 @@ class App
     public function imgHash()
     {
         $imgHash = md5_file($this->photoPath);
-        //$model = new Model;
+        $model = new Model;
         $task = false;
-        //$model->checkPhotoHash($imgHash);
+        $model->checkPhotoHash($imgHash);
         if (!$task) {
-            $name = md5($this->photoName);
-
-            if(move_uploaded_file($$this->photoPath, "../files/photo/$name")) {
-              echo 'file save';
-            }
+            $hashName = md5($this->photoName);
+            move_uploaded_file($this->photoPath,__DIR__ . '/' . PHOTO_DIRECTORY . '/' . $hashName . '.jpg');
         }
-    }s
+    }
 }

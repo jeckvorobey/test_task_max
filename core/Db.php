@@ -3,6 +3,8 @@
 namespace core;
 
 use PDO;
+use PDOException;
+use core\Error;
 
 class Db
 {
@@ -10,7 +12,7 @@ class Db
 
     private $db; // Ресурс работы с БД
 
-    /*
+    /**
      * Получаем объект для работы с БД
      */
     public static function getInstance()
@@ -21,7 +23,7 @@ class Db
         return self::$_instance;
     }
 
-    /*
+    /** 
      * Запрещаем копировать объект
      */
     private function __construct() {}
@@ -29,12 +31,13 @@ class Db
     private function __wakeup() {}
     private function __clone() {}
 
-    /*
+    /**
      * Выполняем соединение с базой данных
      */
-    public function Connect($user, $password, $base, $host = '127.0.0.1', $port = 3306)
+    public function Connect($user, $password, $base, $host, $port)
     {
-        // Формируем строку соединения с сервером
+        try {
+           // Формируем строку соединения с сервером
         $connectString = 'mysql:host=' . $host . ';port= ' . $port . ';dbname=' . $base . ';charset=UTF8;';
         $this->db = new PDO($connectString, $user, $password,
             [
@@ -42,9 +45,13 @@ class Db
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION // возвращать Exception в случае ошибки
             ]
         );
+        } catch (PDOException $e) {
+            new Error();
+            die;
+        }
     }
 
-    /*
+    /**
      * Выполнить запрос к БД
      */
     public function Query($query, $params = [])
@@ -54,7 +61,7 @@ class Db
         return $res;
     }
 
-    /*
+    /** 
      * Выполнить запрос с выборкой данных
      */
     public function Select($query, $params = [])
