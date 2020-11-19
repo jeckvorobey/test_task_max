@@ -2,11 +2,9 @@
 
 namespace app;
 
-require_once '../config/config.php';
-
 use core\Model;
-use core\Task;
 use core\Error;
+use ErrorException;
 use Exception;
 
 class App
@@ -38,11 +36,17 @@ class App
     {
         $imgHash = md5_file($this->photoPath);
         $model = new Model;
-        $task = false;
-        $model->checkPhotoHash($imgHash);
+        $task = $model->checkPhotoHash($imgHash);
+
         if (!$task) {
-            $hashName = md5($this->photoName);
-            move_uploaded_file($this->photoPath,__DIR__ . '/' . PHOTO_DIRECTORY . '/' . $hashName . '.jpg');
+            $hashPhotoName = md5($this->photoName) . '.jpg';
+      
+            if (move_uploaded_file($this->photoPath, $_ENV['PHOTO_DIRECTORY'] . '/' . $hashPhotoName)) {
+                $status = 'received';
+                $taskId = $model->setTask($hashPhotoName, $imgHash, $status); //Записывает данные задания в БД сто статусом received
+                $task = $model->getTask($taskId[0]['LAST_INSERT_ID()']);  //получаем данные только, что вставленного задания
+                echo json_encode($task);
+            }
         }
     }
 }

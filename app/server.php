@@ -3,7 +3,6 @@
 require_once '../vendor/autoload.php';
 
 use app\App;
-use core\Model;
 
 if (isset($_POST) && !empty($_POST)) {
     $imgTmpPath = $_FILES['photo']['tmp_name'];
@@ -12,13 +11,10 @@ if (isset($_POST) && !empty($_POST)) {
 
     if ($imgType  === 'image/jpeg') {
         $app = new App($imgName, $imgTmpPath);
-        echo $app->imgHash();
+        $app->imgHash();
     } else {
         echo 'это не файл JPG';
         exit;
     }
 }
 
-if (isset($_GET) && ($_GET['taskId'] > 0)) {
-    print_r($_GET);
-}
