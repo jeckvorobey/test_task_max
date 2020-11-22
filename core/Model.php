@@ -13,9 +13,11 @@ class Model
 
     private static function dbConnect()
     {
-      $dbConfig = include __DIR__ . '/../config/dbConfig.php';
+        $dbConfig = include __DIR__ . '/../config/dbConfig.php';
 
-      Db::getInstance()->Connect($_ENV['DB_USER'], $_ENV['DB_PASSWORD'],$_ENV['DB_BASE'],$_ENV['DB_HOST'], $_ENV['DB_PORT']);
+        if (Db::getInstance()->Connect($dbConfig['db_user'], $dbConfig['db_password'], $dbConfig['db_base'], $dbConfig['db_host'], $dbConfig['db_port'])) {
+            echo 'db conected';
+        }
     }
 
     public function checkPhotoHash($photoHash) 
@@ -23,7 +25,7 @@ class Model
       return Db::getInstance()->Select('SELECT * FROM `task_tbl` WHERE `photo_hash` = :photoHash', ['photoHash' => $photoHash]);
     }
 
-    public function setTask($photoName, $photoHash, $status) {
+    public function setTask($photoName, $photoHash, $status, $result = null) {
       Db::getInstance()->Query('INSERT INTO `task_tbl`(`photo_name`, `photo_hash`, `status`) VALUES (
       `photo_name` = :photoName, `photo_hash` = :photoHash, `status` = :stat)', [
         'photoName' => $photoName, 

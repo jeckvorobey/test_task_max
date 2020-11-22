@@ -26,7 +26,7 @@ class Error
 
     protected function writeError($errno, $errorstr, $file, $line)
     {
-        $logName = ROOT . '/' . ERR_LOG_DIRECTORY . "/log_" . date('d-m-Y') . ".txt";
+        $logName =  ERR_LOG_DIRECTORY . "/log_" . date('d-m-Y') . ".txt";
         $errMessage = "=======================\n";
         $errMessage .= date('H:i:s');
         $errMessage .= "\nНомер ошибки: " . $errno . "\nТекст ошибки: " . $errorstr . "\nФайл ошибки:  " . $file . "\nСтрока ошибки: " . $line . "\n";

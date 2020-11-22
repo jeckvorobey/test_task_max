@@ -57,6 +57,7 @@ class Db
             ]
             );
         } catch (PDOException $e) {
+            echo $e->getMessage() . "\n";
             new Error();
             die;
         }
@@ -70,7 +71,6 @@ class Db
         $res = $this->db->prepare($query);
         $res->execute($params);
         return $res;
-        $this->db->close();
     }
 
     /**
@@ -80,8 +80,7 @@ class Db
     {
         $result = $this->Query($query, $params);
         if ($result) {
-            return $result->fetchAll();
-            $this->db->close();
+            return $result->fetchAll()
         }
     }
 }
