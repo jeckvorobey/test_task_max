@@ -1,5 +1,5 @@
 <?php
 
-
-
-echo "This index.php\n";
+if(isset($_POST)){
+  echo 'Привет от курла';
+};

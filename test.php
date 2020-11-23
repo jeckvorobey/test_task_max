@@ -1,22 +1,22 @@
 <?php
 
-use app\App;
+use api\Api;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$app = new App();
+$api = new Api();
 
 unset($argv['0']);
 
   switch($argv['1']){
     case 'post': 
-      $res = $app->checkTask($argv['2']);
+      $res = $api->localPost($argv['2']);
       echo $res;
       break;
 
     case 'get':
-      echo $argv['2'] . "\n";
-    break;
+      echo $argv['2'];
+      break;
     default: 
-      echo "ошибка - это не пост и не гет запрос \n";
+      echo "ошибка - это не POST и не GET запрос\n";
 }

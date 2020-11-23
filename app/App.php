@@ -25,7 +25,6 @@ class App
         $model = new Model;
         $task = $model->checkPhotoHash($imgHash);
         if (!$task) {
-            echo '!';
             $status = 'received';
             $taskId = $model->setTask($photoName, $imgHash, $status); //Записывает данные задания в БД сто статусом received
             $task = $model->getTask($taskId[0]['LAST_INSERT_ID()']);  //получаем данные только, что вставленного задания
@@ -33,6 +32,10 @@ class App
         } else {
             //отдаем прочитаный результат
         }
-        
+    }
+
+    public function getTask($task_id)
+    {
+        //получаем задачу по её Id возвращаем JSON строку 
     }
 }
