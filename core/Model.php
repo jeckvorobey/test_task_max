@@ -15,9 +15,7 @@ class Model
     {
         $dbConfig = include __DIR__ . '/../config/dbConfig.php';
 
-        if (Db::getInstance()->Connect($dbConfig['db_user'], $dbConfig['db_password'], $dbConfig['db_base'], $dbConfig['db_host'], $dbConfig['db_port'])) {
-            echo 'db conected';
-        }
+        Db::getInstance()->Connect($dbConfig['db_user'], $dbConfig['db_password'], $dbConfig['db_base'], $dbConfig['db_host'], $dbConfig['db_port'])
     }
 
     public function checkPhotoHash($photoHash) 

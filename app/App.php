@@ -19,9 +19,9 @@ class App
      * Если такая фотография уже загружалась возвращает результат её обработки
      * Если такой фото нет в БД сохраняет на диске и заносит путь в БД
      */
-    public function checkTask($photoName)
+    public function checkTask($photoName, $photoPath)
     {
-        $imgHash = md5_file(ROOT . '/' . PHOTO_DIRECTORY . '/' . $photoName . '.jpg');
+        $imgHash = md5_file($photoPath . $photoName);
         $model = new Model;
         $task = $model->checkPhotoHash($imgHash);
         if (!$task) {
