@@ -80,7 +80,7 @@ class Db
     {
         $result = $this->Query($query, $params);
         if ($result) {
-            return $result->fetchAll()
+            return $result->fetchAll();
         }
     }
 }

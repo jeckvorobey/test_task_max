@@ -12,19 +12,26 @@ class Api
     {
     }
 
-    public function localPost($name)
+    public function post($name, $url, $photoPath, $retry_id = null)
     {
-        $this->name = $name . '.jpg';
-        $dir = __DIR__ . '/../files/photo/' . $this->name;
+        $this->name = $name;
+        $dir = __DIR__ . $photoPath . $this->name;
         $cfile = curl_file_create($dir, 'image/jpg');
 
-        $this->data = [
-        'photo' => $cfile
-      ];
+        if (is_null($retry_id)) {
+            $this->data = [
+              'name' => $this->name,
+              'photo' => $cfile
+            ];
+        } else {
+            $this->data = [
+            'retry_id' => $retry_id
+          ];
+        }
 
         $this->ch = curl_init();
 
-        curl_setopt($this->ch, CURLOPT_URL, "http://localhost:8000/index.php");
+        curl_setopt($this->ch, CURLOPT_URL, $url);
         curl_setopt($this->ch, CURLOPT_POST, 1);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($this->ch, CURLOPT_HEADER, 1);
@@ -38,10 +45,33 @@ class Api
         curl_close($this->ch);
 
 
-          if($curl_errno > 0) {
-        return "cURL Error ($curl_errno): $curl_error\n";
-      } else{
-        return $response;
-      }
+        if ($curl_errno > 0) {
+            return "cURL Error ($curl_errno): $curl_error\n";
+        } else {
+            return $response;
+        }
+    }
+
+    public function get($taskId)
+    {
+        $this->ch = curl_init();
+
+        curl_setopt($this->ch, CURLOPT_URL, URL_LOCAL . '?taskId=' . $taskId);
+        curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($this->ch, CURLOPT_HEADER, 1);
+
+        $response = curl_exec($this->ch);
+
+        $curl_errno = curl_errno($this->ch);
+        $curl_error = curl_error($this->ch);
+
+        curl_close($this->ch);
+
+
+        if ($curl_errno > 0) {
+            return "cURL Error ($curl_errno): $curl_error\n";
+        } else {
+            return $response;
+        }
     }
 }
