@@ -14,9 +14,10 @@ class App
 {
     public $hashPhoto = '';
     public $photoName ='';
+    public $retryId = null;
+    public $taskId = 0;
     public $status = 'received';
     public $result = null;
-    public $taskId = 0;
     public $model;
     public $api;
 
@@ -35,11 +36,8 @@ class App
         $this->photoName = $photoName;
         $this->hashPhoto = md5_file($photoTmpPath);
         $task = $this->model->checkPhotoHash($this->hashPhoto);
-
-        
-
         if ($task) {
-            $this->task($task);
+                $this->taskJson($task);
         } else {
             if (!move_uploaded_file($photoTmpPath, __DIR__ . PHOTO_DIRECTORY . $this->photoName)) {
                 echo "Ошибка сохранения файла\n";
@@ -47,32 +45,70 @@ class App
             }
             
             $taskId = $this->model->setTask($this->photoName, $this->hashPhoto, $this->status, $this->result); //Записывает данные задания в БД сто статусом received
-            $task = $this->model->getTaskId($taskId[0]['LAST_INSERT_ID()']);  //получаем данные только, что вставленного задания
+            $this->taskId = $taskId[0]['LAST_INSERT_ID()'];
+
+            
+            
+            $data = $this->api->post($this->photoName, URL_API, PHOTO_DIRECTORY); //отправляем фото на сервер
+            $this->taskJson($this->model->getTaskId($this->taskId)); //получаем данные только, что вставленного задания
+            $data = json_decode($data, true); //парчим полученый
+            $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $this->taskId); //обновляем данные в бд
+            $item = $this->model->getTaskId($this->taskId);
+
+            if ($data['status'] === 'wait') {
+                $this->upResult($item['retry_id']);
+            } 
     
-            $data = $this->api->post($this->photoName, URL_API, PHOTO_DIRECTORY, $this->result);
-            $data = json_decode($data);
-            $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $this->taskId);
-
-            $this->task($task);
         }
-
     }
 
-    public function checkStatus()
+    public function upResult($retryId)
     {
-        $res = $this->model->getTaskId($this->taskId);
-        $this->status = $res['status'];
+        $task = $this->model->getRetryId($this->retryId);
+        $data = $this->api->postApi(URL_API, $retryId);
 
-        if($this->sattus !== 'sucsses'){
+        $data = json_decode($data, true);
 
+        if ($data['status'] === 'wait') {
+            $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $task['id']);
+
+            sleep(2);
+
+            $this->upResult($data['retry_id']);
+        }
+        
+        if ($data['status'] === 'success') {
+            $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $task['id']);
+            exit;
+        }
+        
+        echo "Ошибка обновления данных\n";
+        
+        exit;
+    }
+
+    public function getTask($taskId)
+    {
+        $task = $this->model->getTaskId($taskId);
+
+        if (!$task) {
+            $res = [
+            'status' => 'not_found',
+            'result' => null
+            ];
+
+            echo json_encode($res) . "\n";
+        } else {
+            $this->taskJson($task);
         }
     }
 
-    public function task ($task)
+    public function taskJson($task)
     {
         $this->taskId = $task['id'];
         $this->status = $task['status'];
         $this->result = $task['result'];
+
 
         $res = [
             'status' => $this->status,
@@ -80,11 +116,6 @@ class App
             'result' => $this->result
         ];
 
-        echo json_encode($res);
-    }
-
-    public function getTask($taskId)
-    {
-        $this->task($this->model->getTaskId($taskId));
+        echo json_encode($res) . "\n";
     }
 }

@@ -40,9 +40,14 @@ class Model
       return $res[0];
     }
 
+    public function getRetryId($retryId){
+      $res =  Db::getInstance()->Select('SELECT * FROM `task_tbl` WHERE `retry_id` = :retryId', ['retryId' => $retryId]);
+      return $res[0];
+    }
+
     public function updateStatus($status, $result, $retry_id, $taskId)
     {
-      Db::getInstance()->Query('UPDATE `task_tbl` SET `status`= :stat,`result`= :res,`retry_id`= :retry_id WHERE `id` = :taskId', [
+      return Db::getInstance()->Query('UPDATE `task_tbl` SET `status`= :stat,`result`= :res,`retry_id`= :retry_id WHERE `id` = :taskId', [
         'stat' => $status,
         'res' => $result,
         'retry_id' => $retry_id,

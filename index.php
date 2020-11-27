@@ -24,5 +24,5 @@ if(isset($_POST) && !empty($_FILES)){
 
 if(isset($_GET) && !empty($_GET['taskId'])) {
   $app = new App;
-  return $app->getTask($_GET['taskId']);
+  $app->getTask($_GET['taskId']);
 }

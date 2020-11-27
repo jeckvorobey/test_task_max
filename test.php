@@ -12,7 +12,7 @@ unset($argv['0']);
 
   switch ($argv['1']) {
     case 'post':
-      $name = $argv['2'] . '.jpeg';
+      $name = $argv['2'] . '.jpg';
       $res = $api->post($name, URL_LOCAL, TMP_PHOTO_DIREEKTORY);
       echo "$res\n";
       break;
@@ -20,7 +20,6 @@ unset($argv['0']);
     case 'get':
       $res = $api->get($argv['2']);
       echo "$res\n";
-      //echo $argv['2'];
       break;
     default:
       echo "ошибка - это не POST и не GET запрос\n";
