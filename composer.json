@@ -5,10 +5,6 @@
         "name": "Sergey",
         "email": "jeckvorobey69@gmail.com"
     }],
-    "require": {
-        "guzzlehttp/guzzle": "^7.0",
-        "vlucas/phpdotenv": "^5.2"
-    },
     "autoload": {
         "psr-4": {
             "app\\": "app",
