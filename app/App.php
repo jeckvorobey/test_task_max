@@ -51,7 +51,7 @@ class App
 
             $data = $this->api->post($this->photoName, URL_API, PHOTO_DIRECTORY); //отправляем фото на сервер
             $this->taskJson($this->model->getTaskId($this->taskId)); //получаем данные только, что вставленного задания
-            $data = json_decode($data, true); //парчим полученый
+            $data = json_decode($data, true);
             $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $this->taskId); //обновляем данные в бд
             $task = $this->model->getTaskId($this->taskId);
             $this->status = $task['status'];
@@ -69,7 +69,7 @@ class App
             $data = json_decode($data, true);
 
             $this->model->updateStatus($data['status'], $data['result'], $data['retry_id'], $this->taskId);
-            $task = $this->model->getStatus($this->taskId);
+            $task = $this->model->getTaskId($this->taskId);
             $this->status = $task['status'];
 
             sleep(2);

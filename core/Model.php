@@ -45,10 +45,6 @@ class Model
       return $res[0];
     }
 
-    public function getStatus($status){
-      $res =  Db::getInstance()->Select('SELECT `retry_id` FROM `task_tbl` WHERE `status` = :stat', ['stat' => $status]);
-      return $res;
-    }
 
     public function updateStatus($status, $result, $retry_id, $taskId)
     {
