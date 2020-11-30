@@ -1,0 +1,11 @@
+# /etc/systemd/system/worker.service
+
+[Unit]
+Description=Runs worker
+Wants=worker.timer
+
+[Service]
+ExecStart=/usr/bin/php /core/observer.php
+
+[Install]
+WantedBy=multi-user.target

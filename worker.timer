@@ -1,0 +1,12 @@
+# /etc/systemd/system/worker.timer
+
+[Unit]
+Description=Run worker every 2 seconds
+Requires=worker.service
+
+[Timer]
+Unit=worker.service
+OnCalendar=*:*:0/2
+
+[Install]
+WantedBy=timers.target
