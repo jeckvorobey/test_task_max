@@ -62,8 +62,7 @@ class App
     public function upResult()
     {
         while ($this->status === 'wait') {
-
-            $task = $this->model->getStatus($this->taskId);
+            $task = $this->model->getTaskId($this->taskId);
             $data = $this->api->postApi(URL_API, $task['retry_id']);
 
             $data = json_decode($data, true);
@@ -73,9 +72,8 @@ class App
             $this->status = $task['status'];
 
             sleep(2);
-            exit;
         }
-
+        exit;
     }
     
 
