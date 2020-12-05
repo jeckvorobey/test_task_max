@@ -9,9 +9,6 @@ RUN apt-get install -fyqq \
     mariadb-client gnupg binutils-gold autoconf \
     g++ gcc gnupg libgcc1 linux-headers-amd64 make python
 
-# Install composer
-#RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
-#   && chmod 755 /usr/bin/composer
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
