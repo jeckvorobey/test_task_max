@@ -8,7 +8,6 @@ services:
       - 8000:80
     volumes:
       - ./:/var/www/html
-    command: composer install
       
   mariadb:
     image: mariadb:10.4

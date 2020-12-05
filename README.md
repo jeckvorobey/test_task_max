@@ -1,8 +1,6 @@
 Инструкция по запуску
 
-1. docker-compose build
-
-2. docker-compose up -d
+2. docker-compose up  --build
 
 Проверка сервиса:
 

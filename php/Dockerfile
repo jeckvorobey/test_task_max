@@ -34,3 +34,5 @@ RUN apt-get install -fyqq zip libzip-dev \
     && apt-get remove -fyqq
 
 WORKDIR /var/www/html
+
+CMD composer install
