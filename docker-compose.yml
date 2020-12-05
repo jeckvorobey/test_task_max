@@ -1,6 +1,13 @@
 version: "3.5"
 
 services:
+  php:
+    build:
+      context: php
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www/html
 
   mariadb:
     image: mariadb:10.4
@@ -10,22 +17,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: task_db
-    restart: 
-
     volumes:
       - ./databases:/var/lib/mysql 
-
-  php:
-    build:
-      context: php
-    restart: always
-    ports:
-      - 8000:80
-    volumes:
-      - ./:/var/www/html
-    depends_on: 
-      - mariadb
-
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -33,6 +26,3 @@ services:
       - 8080:80
     environment:
       PMA_HOST: mariadb
-  depends_on: 
-    -mariadb
-    -php
