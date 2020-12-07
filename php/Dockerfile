@@ -4,6 +4,10 @@ WORKDIR /var/www/html
 
 COPY . /var/www/html
 
+RUN mkdir /var/www/html/files/photo
+
+RUN chmod 777 /var/www/html/files/photo
+
 RUN apt-get update
 
 # Install tools required for build stage
