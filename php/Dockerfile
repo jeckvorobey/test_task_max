@@ -1,5 +1,9 @@
 FROM php:7.3.24-apache-stretch
 
+WORKDIR /var/www/html
+
+COPY . /var/www/html
+
 RUN apt-get update
 
 # Install tools required for build stage
@@ -9,12 +13,13 @@ RUN apt-get install -fyqq \
     mariadb-client gnupg binutils-gold autoconf \
     g++ gcc gnupg libgcc1 linux-headers-amd64 make python
 
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin && \
-    composer
+    composer 
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 
 # Install additional PHP libraries
@@ -29,7 +34,3 @@ RUN apt-get install -fyqq libfreetype6 libfreetype6-dev libpng16-16 libpng-dev l
 RUN apt-get install -fyqq zip libzip-dev \
     && docker-php-ext-install zip \
     && apt-get remove -fyqq
-
-WORKDIR /var/www/html
-
-CMD composer install

@@ -9,6 +9,7 @@ services:
     volumes:
       - ./:/var/www/html
 
+
   mariadb:
     image: mariadb:10.4
     restart: always
