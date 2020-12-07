@@ -1,12 +1,6 @@
 FROM php:7.3.24-apache-stretch
 
-WORKDIR /var/www/html
 
-COPY . /var/www/html
-
-RUN mkdir /var/www/html/files/photo
-
-RUN chmod 777 /var/www/html/files/photo
 
 RUN apt-get update
 
@@ -38,3 +32,9 @@ RUN apt-get install -fyqq libfreetype6 libfreetype6-dev libpng16-16 libpng-dev l
 RUN apt-get install -fyqq zip libzip-dev \
     && docker-php-ext-install zip \
     && apt-get remove -fyqq
+
+WORKDIR /var/www/html
+
+RUN mkdir /var/www/html/files/photo
+
+RUN chmod 777 /var/www/html/files/photo
