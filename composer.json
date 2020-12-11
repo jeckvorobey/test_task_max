@@ -1,5 +1,6 @@
 {
     "name": "serg/test_task",
+    "description": "api servise",
     "type": "n",
     "authors": [{
         "name": "Sergey",

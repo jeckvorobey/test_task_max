@@ -39,9 +39,15 @@ class App
         if ($task) {
             $this->taskJson($task);
         } else {
+            if (!is_dir(PHOTO_DIRECTORY)) {
+                if (!mkdir(PHOTO_DIRECTORY, 0777, true)) {
+                    die("Не удалось создать директорию...\n");
+                }
+            }
+
             if (!move_uploaded_file($photoTmpPath, __DIR__ . PHOTO_DIRECTORY . $this->photoName)) {
-                echo "Ошибка сохранения файла\n";
-                die;
+                die( "Ошибка сохранения файла\n");
+            
             }
 
             $taskId = $this->model->setTask($this->photoName, $this->hashPhoto, $this->status, $this->result); //Записывает данные задания в БД сто статусом received
