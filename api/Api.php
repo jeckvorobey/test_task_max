@@ -17,10 +17,9 @@ class Api
         $this->name = $name;
         $dir = __DIR__ . $photoPath . $this->name;
         $cfile = curl_file_create($dir, 'image/jpg');
-
         $this->data = [
-            'name' => $this->name,
-            'photo' => $cfile
+        'name' => $this->name,
+        'photo' => $cfile
         ];
 
         $this->ch = curl_init();

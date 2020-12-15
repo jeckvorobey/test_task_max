@@ -1,4 +1,4 @@
-FROM php:7.4.13-apache
+FROM php:8-apache-buster
 
 RUN apt-get update && \
   apt-get upgrade -fyqq
